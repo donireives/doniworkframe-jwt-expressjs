@@ -1,0 +1,12 @@
+{
+  "rs": "restart",
+  "exec": "npm run dev:build",
+  "ignore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "watch": [
+    "src/"
+  ],
+  "ext": "ts"
+}
