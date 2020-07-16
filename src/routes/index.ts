@@ -1,5 +1,6 @@
-import authRoute from "./authRoute";
 import {Router} from "express";
+import test from "../app/test";
+import authRoute from "./authRoute";
 
 const indexRoute = Router();
 
@@ -11,6 +12,8 @@ export default () => {
     });
   });
 
+  indexRoute.use("/test", test);
+  
   authRoute(indexRoute);
   
   return indexRoute;

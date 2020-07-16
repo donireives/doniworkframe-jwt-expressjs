@@ -5,7 +5,7 @@ const router = Router();
 
 const authRoute = (app: Router) => {
   app.use('/auth', router);
-  router.post('/email-login', AuthController.validatorEmailLogin, AuthController.loginEmail);
+  router.post('/login', AuthController.validatorEmailLogin, AuthController.loginEmail);
 }
 
 export default authRoute;

@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import routes from "./routes";
+import routes from "./routes/index";
 
 const startServer = () => {
   dotenv.config();
