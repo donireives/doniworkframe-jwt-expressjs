@@ -7,10 +7,6 @@ import routes from "./routes/index";
 const startServer = () => {
   dotenv.config();
 
-  if (!process.env.PORT) {
-    process.exit(1);
-  }
-
   const PORT: number = parseInt(process.env.PORT as string, 10);
 
   const app = express();

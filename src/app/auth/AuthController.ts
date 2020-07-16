@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import {body, validationResult} from "express-validator";
 import {EmailLoginRequest} from "../../entity/request/AuthRequestTypes";
-import ErrorResponse from "../../entity/response/ErrorResponse";
 import SuccessResponse from "../../entity/response/SuccessResponse";
+import ErrorResponse from "../../entity/response/ErrorResponse";
+import CheckJwt from "../../middleware/checkJwt";
 
 class AuthController {
     public static validatorEmailLogin = [
@@ -20,19 +21,26 @@ class AuthController {
         
         if (!validationError.isEmpty()) {
             return ErrorResponse.send(res, {
+                status: false,
+                type: "BODY_ERROR",
                 message: validationError.mapped(),
-                meta: undefined,
-                type: "BODY_ERROR"
             });
         }
 
-        return SuccessResponse.send(res, {
-            type: "AUTHENTICATED",
-            data: 'asdasd',
-            meta: null,
-        });
+        let x: any = {
+            id_user: 7,
+            name: 'doni'
+        };
 
-    }
+        const checkJwt = new CheckJwt()
+        const token = checkJwt.create(x)
+
+        return SuccessResponse.send(res, {
+            status: true,
+            type: "AUTHENTICATED",
+            data: token,
+        });
+    }    
 }
 
 export default AuthController;
