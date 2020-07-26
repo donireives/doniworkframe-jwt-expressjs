@@ -2,21 +2,21 @@ import jwt from "jsonwebtoken"
 import moment from "moment";
 
 export default class AuthToken {
-    private _token: string;
-    private _secret: string;
-    private _data: any;
-    private _nearExp: boolean;
+    private jwtToken: string;
+    private jwtKey: string;
+    private jwtData: any;
+    private jwtExp: boolean;
 
     constructor(token: string = "") {
-        this._token = token
-        this._secret = 'asdasdasd'
-        this._nearExp = false;
+        this.jwtToken = token
+        this.jwtKey = 'asdasdasd'
+        this.jwtExp = false;
     }
 
     isValid() {
         try {
-            if (this._token === "") return false;
-            this._data = jwt.verify(this._token, this._secret)
+            if (this.jwtToken === "") return false;
+            this.jwtData = jwt.verify(this.jwtToken, this.jwtKey)
             
             return this.isActiveToken()
         } catch (e) {
@@ -28,32 +28,32 @@ export default class AuthToken {
         delete params['iat'];
         delete params['exp'];
 
-        return jwt.sign(params, this._secret, {
+        return jwt.sign(params, this.jwtKey, {
             expiresIn: 604800
         })
     }
 
     isActiveToken() {
-        if (!this._data) return false;
+        if (!this.jwtData) return false;
 
-        const exp = moment.unix(this._data.exp)
+        const exp = moment.unix(this.jwtData.exp)
         const diff = exp.diff(moment.now())
         const hours = exp.diff(moment.now(), 'hours')
         
-        if (hours < 24) this._nearExp = true
+        if (hours < 24) this.jwtExp = true
         
         return diff.valueOf() > 0
     }
 
     get newToken(): string {
-        return this.create(this._data)
+        return this.create(this.jwtData)
     }
 
     get userData(): Object | undefined {
-        return this._data
+        return this.jwtData
     }
 
     get nearExp(): boolean {
-        return this._nearExp
+        return this.jwtExp
     }
 }

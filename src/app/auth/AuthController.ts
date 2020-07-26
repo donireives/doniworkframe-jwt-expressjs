@@ -27,6 +27,7 @@ class AuthController {
             });
         }
 
+        // implement DB connect in future
         let x: any = {
             id_user: 7,
             name: 'doni'
